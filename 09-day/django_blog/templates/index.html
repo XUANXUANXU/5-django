@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>美妆博客首页</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/static/css/nprogress.css">
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+<link rel="stylesheet" type="text/css" href="/static/css/font-awesome.min.css">
+<link rel="apple-touch-icon-precomposed" href="/static/images/icon.png">
+<link rel="shortcut icon" href="/static/images/favicon.ico">
+
+<script src="/static/js/jquery-2.1.4.min.js"></script>
+<script src="/static/js/nprogress.js"></script>
+<script src="/static/js/jquery.lazyload.min.js"></script>
+
+</head>
+<body class="user-select">
+{% include 'header_nav.html' %}
+<section class="container">
+<div class="content-wrap">
+<div class="content">
+
+
+{#    banner轮播图#}
+
+  <div id="focusslide" class="carousel slide" data-ride="carousel">
+	<ol class="carousel-indicators">
+      {% for banner in banner_list %}
+      {% if banner.is_active %}
+	  <li data-target="#focusslide" data-slide-to="{{ banner.idx }}" class="active"></li>
+        {% else %}
+	  <li data-target="#focusslide" data-slide-to="{{ banner.idx }}"></li>
+        {% endif %}
+        {% endfor %}
+
+	</ol>
+	<div class="carousel-inner" role="listbox">
+
+        {% for banner in banner_list %}
+        {% if banner.is_active %}
+         <div class="item active">
+	     <a href="{{ banner.link_url }}" target="_blank" title="{{ banner.title }}" >
+	     <img src="/{{ banner.cover }}" alt="{{ banner.title }}" class="img-responsive"></a>
+	     </div>
+          {% else %}
+
+            <div class="item">
+	        <a href="{{ banner.link_url }}" target="_blank" title="{{ banner.title }}" >
+	        <img src="/{{ banner.cover }}" alt="{{ banner.title }}" class="img-responsive"></a>
+	         </div>
+         {% endif %}
+        {% endfor %}
+
+
+
+  </div>
+      <a class="left carousel-control" href="#focusslide" role="button" data-slide="prev" rel="nofollow"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">上一个</span> </a> <a class="right carousel-control" href="#focusslide" role="button" data-slide="next" rel="nofollow"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">下一个</span> </a> </div>
+    {#    banner轮播图#}
+
+{% for recommend in recommend_list %}
+<article class="excerpt-minic excerpt-minic-index">
+      <h2><span class="red">【推荐】</span><a target="_blank" href="{% url 'blogapp:show' recommend.id %}" title="{{ recommend.title }}" >{{ recommend.title }}</a>
+		</h2>
+		<p class="note">{{ recommend.content | truncatechars_html:100}}</p>
+	</article>
+{% endfor %}
+
+
+
+
+  <div class="title">
+	<h3>最新发布</h3>
+
+
+	<div class="more">
+        {% for blogcategory in blogcategory_list %}
+      <a href="#" title="{{ blogcategory.name }}" >{{ blogcategory.name }}</a>
+      {% endfor %}
+
+		</div>
+
+
+
+  </div>
+{% for post in post_list %}
+<article class="excerpt excerpt-1" style="">
+  <a class="focus" href="{% url 'blogapp:show' post.id %}" title="{{ post.title }}" target="_blank" ><img class="thumb" data-original="/{{ post.cover }}" src="/{{ post.cover }}" alt="{{ post.title }}"  style="display: inline;"></a>
+		<header><a class="cat" href="{% url 'blogapp:show' post.id %}" title="美妆课堂-博客" >美妆课堂-博客<i></i></a>
+			<h2><a href="{% url 'blogapp:show' post.id %}" title="{{ post.title }}" target="_blank" >{{ post.title }}</a>
+			</h2>
+		</header>
+		<p class="meta">
+			<time class="time"><i class="glyphicon glyphicon-time"></i> {{ post.pub_date}}</time>
+			<span class="views"><i class="glyphicon glyphicon-eye-open"></i>{{ post.views }}</span> <a class="comment" href="##comment" title="评论" target="_blank" ><i class="glyphicon glyphicon-comment"></i> {{ post.comment_set.count }}</a>
+		</p>
+		<p class="note">{{ post.content|truncatechars_html:100 }}</p>
+	</article>
+{% endfor %}
+
+  <nav class="pagination" style="display: none;">
+	<ul>
+	  <li class="prev-page"></li>
+	  <li class="active"><span>1</span></li>
+	  <li><a href="?page=2">2</a></li>
+	  <li class="next-page"><a href="?page=2">下一页</a></li>
+	  <li><span>共 2 页</span></li>
+	</ul>
+  </nav>
+</div>
+</div>
+<aside class="sidebar">
+<div class="fixed">
+
+
+  <div class="widget widget-tabs">
+	<ul class="nav nav-tabs" role="tablist">
+	  <li role="presentation" class="active"><a href="#notice" aria-controls="notice" role="tab" data-toggle="tab" >统计信息</a></li>
+	  <li role="presentation"><a href="#contact" aria-controls="contact" role="tab" data-toggle="tab" >联系站长</a></li>
+	</ul>
+	<div class="tab-content">
+	  <div role="tabpanel" class="tab-pane contact active" id="notice">
+		<h2>日志总数:
+			  {{ count }}篇
+		  </h2>
+		  <h2>网站运行:
+		  <span id="sitetime">88天 </span></h2>
+	  </div>
+		<div role="tabpanel" class="tab-pane contact" id="contact">
+		  <h2>QQ:302738630
+			  <a href="" target="_blank" rel="nofollow" data-toggle="tooltip" data-placement="bottom" title=""  data-original-title="QQ:"></a>
+		  </h2>
+		  <h2>Email:302738630@qq.com
+		  <a href="#" target="_blank" data-toggle="tooltip" rel="nofollow" data-placement="bottom" title=""  data-original-title="#"></a></h2>
+	  </div>
+	</div>
+  </div>
+
+
+  {% include 'search.html' %}
+</div>
+<div class="widget widget_hot">
+	  <h3>最新评论文章</h3>
+	  <ul>
+
+{% for post in new_comment_list %}
+<li><a title="{{ post.title }}" href="{% url 'blogapp:show' post.id %}" ><span class="thumbnail">
+				<img class="thumb" data-original="/{{ post.cover }}" src="/{{ post.cover }}" alt="{{ post.title }}"  style="display: block;">
+			</span><span class="text">{{ post.title }}</span><span class="muted"><i class="glyphicon glyphicon-time"></i>
+				{{ post.pub_date }}
+			</span><span class="muted"><i class="glyphicon glyphicon-eye-open"></i>{{ post.views }}</span></ a></li>
+
+{% endfor %}
+
+
+
+
+
+	  </ul>
+ </div>
+
+<div class="widget widget_sentence">
+  <h3>友情链接</h3>
+  <div class="widget-sentence-link">
+{% for friend in friend_list %}
+<a href="{{ friend.link }}" title="{{ friend.title }}" target="_blank" >{{ friend.title }}</a>&nbsp;&nbsp;&nbsp;
+{% endfor %}
+
+
+
+  </div>
+</div>
+
+</aside>
+</section>
+<footer class="footer">
+<div class="container">
+<p>Copyright &copy; 2016.Company name All rights reserved.</p>
+</div>
+<div id="gotop"><a class="gotop"></a></div>
+</footer>
+<script src="/static/js/bootstrap.min.js"></script>
+{#<script src="/static/js/jquery.ias.js"></script>#}
+<script src="/static/js/scripts.js"></script>
+</body>
+</html>

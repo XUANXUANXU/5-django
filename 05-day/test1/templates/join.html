@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>join</title>
+    <script src="https://cdn.bootcss.com/jquery/1.2.3/jquery.js"></script>
+    <script>
+        $.ajaxSetup({data: {csrfmiddlewaretoken: '{{ csrf_token }}'},});
+        $(function () {
+            $('#btn').click(function () {
+                $.get('/booktest/join2/',function (data) {
+                    var data2 = JSON.parse(data)
+                    alert(data2['a'])
+                    $('#hello').html(data2['a'])
+                    $('#world').html(data2['b'])
+
+                })
+
+            })
+            $('#btnpost').click(function () {
+                var  account = $('#zhanghao').val()
+                var  pwd = $('#mima').val()
+                $.post('/booktest/join3/',{'a':account,'b':pwd},function (data) {
+                    var data2 = JSON.parse(data)
+                    alert(data2['l'])
+                    $('#zhang_hao').html(data2['l'])
+                    $('#mi_ma').html(data2['ll'])
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+<button id="btn">get请求</button>
+<p id="hello"></p>
+<p id="world"></p>
+<hr>
+<button id="btnpost">post请求</button>
+<input type="text" id="zhanghao" placeholder="请输入账号...">
+<input type="password" id="mima" placeholder="请输入密码...">
+<hr>
+<p id="zhang_hao"></p>
+<p id="mi_ma"></p>
+</body>
+</html>

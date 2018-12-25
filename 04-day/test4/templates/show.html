@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="/booktest/index2/?account=12345&pwd=1234421">get请求</a>
+
+<form action="/booktest/index2/" method="post">
+    {% csrf_token %}
+    吃饭<input type="checkbox" name="hobby" value="吃饭"/>
+    睡觉<input type="checkbox" name="hobby" value="睡觉"/>
+    打豆豆<input type="checkbox" name="hobby" value="打豆豆"/>
+    <input type="submit" value="提交">
+</form>
+</body>
+</html>

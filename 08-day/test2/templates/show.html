@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>展示页面</title>
+</head>
+<body>
+ <h1>{{ pIndex }}页的地区信息</h1>
+{% for foo in list %}
+<li>{{ foo.atitle }}</li>
+{% endfor %}
+<h2>页码</h2>
+
+{% for fo in plist %}
+    {% if fo == pIndex %}
+        <a href="">{{ fo }}</a>
+
+    {% else %}
+        <a href="/show/{{ fo }}">{{ fo }}</a>
+    {% endif %}
+
+{% endfor %}
+
+</body>
+</html>

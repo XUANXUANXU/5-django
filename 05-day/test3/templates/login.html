@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/1.2.3/jquery.js"></script>
+    <script>
+        $.ajaxSetup({data: {csrfmiddlewaretoken: '{{ csrf_token }}'},});
+        $(function () {
+            $('#zhuce_action').click(function () {
+                var account = $('#account').val();
+                var pwd = $('#pwd').val();
+                d = {
+                    'account':account,
+                    'pwd':pwd
+                };
+                $.post('/zhuce_chuli/',d,function (data) {
+                    data2 = JSON.parse(data);
+                    alert(data2['status'])
+                })
+
+
+
+            });
+
+            $('#login_action').click(function () {
+
+                var account = $('#account').val();
+                var pwd = $('#pwd').val();
+                d = {
+                    'account':account,
+                    'pwd':pwd
+                };
+                $.post('/login_chuli/',d,function (data) {
+                    data2 = JSON.parse(data);
+                    {#alert(data2['status'])#}
+                    if (data2['status'] == 200){
+                        alert('登陆成功')
+                    }else {
+                        alert('登录失败')
+                    }
+                })
+
+
+            })
+        })
+    </script>
+
+</head>
+<body>
+    账号: <input type="text" placeholder="请输入账号..." id="account"><br>
+    密码: <input type="password" placeholder="请输入密码..." id="pwd"><br>
+    <hr>
+    <button id="zhuce_action">注册</button>
+    <button id="login_action">登录</button>
+
+</body>
+</html>
+
+
+
+
+
+

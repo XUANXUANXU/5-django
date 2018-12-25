@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/1.2.6/jquery.js"></script>
+    <script>
+        $.ajaxSetup({data: {csrfmiddlewaretoken: '{{ csrf_token }}'},});
+        $(function () {
+            $('#register_action').click(function () {
+                var account = $('#account').val();
+                var pwd = $('#pwd').val();
+                $.post('/register_handle/', {'account': account, 'pwd': pwd}, function (data) {
+                    data2 = JSON.parse(data);
+                    {#alert(data2['status'])#}
+                    if (data2['status'] == 200) {
+                        window.open('/register_successful/')
+                        alert('注册成功')
+                    } else {
+                        alert('注册失败')
+                    }
+                })
+
+
+            });
+            $('#login_action').click(function () {
+
+                var account = $('#account').val();
+                var pwd = $('#pwd').val();
+                $.post('/login_handle/', {'account': account, 'pwd': pwd}, function (data) {
+                    data2 = JSON.parse(data);
+                    alert(data2['status'])
+                    if (data2['status'] == 200){
+                        window.open('/login_successful/')
+                    }else{
+                        alert('登录失败')
+                    }
+
+                })
+
+
+            });
+        })
+    </script>
+</head>
+<body>
+<input type="text" placeholder="请输入账号" id="account"><br>
+<input type="password" placeholder="请输入密码" id="pwd">
+<hr>
+<button id="register_action">注册</button>
+<button id="login_action">登录</button>
+</body>
+</html>

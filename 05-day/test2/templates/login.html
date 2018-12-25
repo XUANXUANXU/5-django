@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <script src="https://cdn.bootcss.com/jquery/1.12.1/jquery.js"></script>
+    <script>
+        $.ajaxSetup({data: {csrfmiddlewaretoken: '{{ csrf_token }}'},});
+        $(function () {
+            $('#commit').click(function () {
+                var account = $('#account').val()
+                var pwd = $('#pwd').val()
+                $.post('/login2/',{'account':account,'pwd':pwd},function (data) {
+                    if (data['s'] == 'ok'){
+
+                        window.open('/chenggong/')
+                    }
+                    {#alert(data['account'])#}
+                    {#alert(data['pwd'])#}
+                })
+
+
+            })
+
+
+
+        })
+    </script>
+</head>
+<body>
+<input type="text" placeholder="请输入账号..." id="account">
+<input type="password" placeholder="请输入密码..." id="pwd">
+<button id="commit">提交</button>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for foo in p %}
+    <img src="/static/media/{{ foo.pic_url }}">
+    <hr>
+{% endfor %}
+</body>
+</html>
